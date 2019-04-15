@@ -15,10 +15,24 @@
 
 "you need to write the triangle method"
 
-(define-condition triangle-error  (error) ())
+(define-condition triangle-error (error) ())
+
+(defun triangle? (a b c)
+  (if (and (> (+ a b) c)
+           (> (+ b c) a)
+           (> (+ a c) b))
+    t
+    nil))
 
 (defun triangle (a b c)
-  :write-me)
+  (if (triangle? a b c)
+    (cond
+      ((and (equal a b) (equal b c))
+       :equilateral)
+      ((or (equal a b) (equal b c) (equal a c))
+          :isosceles)
+      (t :scalene))
+    (make-condition 'triangle-error)))
 
 
 (define-test test-equilateral-triangles-have-equal-sides

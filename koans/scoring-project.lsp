@@ -51,7 +51,7 @@
 
 (defun score (dice)
   ; You need to write this method
-)
+  )
 
 (define-test test-score-of-an-empty-list-is-zero
     (assert-equal 0 (score nil)))
