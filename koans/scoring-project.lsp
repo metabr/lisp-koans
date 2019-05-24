@@ -49,9 +49,30 @@
 ;
 ; Your goal is to write the score method.
 
+(defun triplet? (dice)
+  (and (equal (car dice) (cadr dice))
+       (equal (car dice) (caddr dice))))
+
+(defun score-recur (dice sum)
+  (if dice
+    (if (triplet? dice)
+      (score-recur
+        (cdddr dice)
+        (+ sum
+           (case (car dice)
+             (1 1000)
+             (t (* 100 (car dice))))))
+      (score-recur
+        (cdr dice)
+        (+ sum
+           (case (car dice)
+             (1 100)
+             (5 50)
+             (t 0)))))
+    sum))
+
 (defun score (dice)
-  ; You need to write this method
-  )
+  (score-recur (sort dice #'<) 0))
 
 (define-test test-score-of-an-empty-list-is-zero
     (assert-equal 0 (score nil)))
